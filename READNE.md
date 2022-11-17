@@ -1,0 +1,1 @@
+A simple webpage which connects to an API and retrieves information about Dogs by using hte fetch() API

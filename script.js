@@ -1,1 +1,1 @@
-console.log('Hello World!')
+fetch('https://dog.ceo/api/breeds/list/all')
