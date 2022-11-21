@@ -8,11 +8,17 @@
 //     .then(data => {
 //     })
 
-async function fetchData(url) {
-    let response = await fetch(url)
-    let data = await response.json()
+let timer
+let deleteFirstPhotoDelay 
 
-    createBreedList(data.message)   
+async function fetchData(url) {
+    try {
+        let response = await fetch(url)
+        let data = await response.json()
+        createBreedList(data.message) 
+    } catch(e) {
+        console.log('There was a problem fetching data from the server!')
+    }
 }
 
 // take the breedList and create an HTML drop-down menu
@@ -38,18 +44,29 @@ async function loadByBreed(breed) {
 
 function createSlideshow(images) {
     let currentPosition = 0
-    document.querySelector('#slideshow').innerHTML = 
-    `<div class="slide" style="background-image: url('${images[0]}')"></div>
-    <div class="slide" style="background-image: url('${images[1]}')"></div>
-    `
-
-    currentPosition += 2
-    setInterval(nextSlide, 3000)
+    clearInterval(timer)
+    clearTimeout(deleteFirstPhotoDelay)
+   
+    if (images.length > 1) {
+        document.querySelector('#slideshow').innerHTML = 
+        `<div class="slide" style="background-image: url('${images[0]}')"></div>
+        <div class="slide" style="background-image: url('${images[1]}')"></div>
+        `
+        currentPosition += 2
+        if (images.length == 2) currentPosition = 0
+        timer = setInterval(nextSlide, 3000)
+    } else {
+        document.querySelector('#slideshow').innerHTML = 
+        `<div class="slide" style="background-image: url('${images[0]}')"></div>
+        <div class="slide"></div>
+        `
+    }
 
     function nextSlide() {
         document.querySelector('.slideshow')
             .insertAdjacentHTML('beforeend', `<div class="slide" style="background-image: url('${images[currentPosition]}')"></div>`)
-            setTimeout(() => document.querySelector('.slide').remove(), 1000)
+
+            deleteFirstPhotoDelay = setTimeout(() => document.querySelector('.slide').remove(), 1000)
             
             if (currentPosition + 1 >= images.length) {
                 currentPosition = 0
