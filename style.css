@@ -1,6 +1,6 @@
 body {
     margin: 0; padding: 0;
-    font-family: sans-serif;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif
 }
 
 .app {
@@ -13,6 +13,8 @@ body {
 .header {
     text-align: center; 
     padding: 20px 0;
+    background-color: #333;
+    color: #fff;
 }
 
 .header > h1 {
@@ -27,6 +29,7 @@ body {
     flex: 1;
     background-color: #333;
     position: relative; /* in this way we can position its children in relation to it using absolute */
+    overflow: hidden;
 }
 
 .slide {
